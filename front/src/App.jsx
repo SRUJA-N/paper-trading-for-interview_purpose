@@ -1,18 +1,23 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import AuthPage from "./pages/AuthPage";
-import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import TradePage from "./pages/TradePage";
+import PortfolioPage from "./pages/PortfolioPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/auth" element={<AuthPage />} />
+    <Routes>
+      <Route path="/auth" element={<AuthPage />} />
+
+      <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
-    </Router>
+        <Route path="/trade" element={<TradePage />} />
+        <Route path="/portfolio" element={<PortfolioPage />} />
+      </Route>
+
+      <Route path="*" element={<Navigate to="/auth" />} />
+    </Routes>
   );
 }
 
